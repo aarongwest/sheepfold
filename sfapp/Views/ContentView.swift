@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var showPercentages = false
     @State private var refreshID = UUID()
     @State private var selectedTab: Int
+    @State private var tagUpdateFlag = false // Used to force view refreshes when tags are updated
     
     private var currentTheme: ThemeMode {
         ThemeMode(rawValue: themeMode) ?? .dark
@@ -238,6 +239,11 @@ struct ContentView: View {
                 withAnimation {
                     selectedTab = 0  // Switch to Home tab
                 }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("TagsUpdated"))) { _ in
+                // Force refresh the view when tags are updated
+                tagUpdateFlag.toggle() // Toggle to force view refresh
+                refreshID = UUID() // Force MemberListView to refresh
             }
             .preferredColorScheme(currentTheme.isDark ? .dark : .light)
             .tint(currentTheme.tintColor())
