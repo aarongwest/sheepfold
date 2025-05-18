@@ -16,7 +16,7 @@ struct InfoView: View {
                     .frame(width: 120, height: 120)
                     .foregroundColor(theme.tintColor())
                 
-                Text("Version 1.0.0")
+                Text("Version 1.5.0")
                     .font(.caption)
                     .foregroundColor(theme.foregroundColor())
             }
@@ -218,12 +218,148 @@ struct ChangelogView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                // Version 1.5.0
+                Group {
+                    Text("Version 1.5.0")
+                        .font(.headline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    Text("May 2025")
+                        .font(.subheadline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("• Fixed tag-filtered contacts not appearing in SMS/email 'to' field")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Custom tags now appear at the beginning of tag lists for easier access")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• New tags now display immediately when created without requiring view refresh")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Fixed feedback form submission errors")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Various performance improvements and bug fixes")
+                            .foregroundColor(theme.foregroundColor())
+                    }
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Version 1.4.0
+                Group {
+                    Text("Version 1.4.0")
+                        .font(.headline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    Text("February 2025")
+                        .font(.subheadline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("• Added advanced filtering capabilities")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Improved member search functionality")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Enhanced tag management system")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• UI/UX refinements")
+                            .foregroundColor(theme.foregroundColor())
+                    }
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Version 1.3.0
+                Group {
+                    Text("Version 1.3.0")
+                        .font(.headline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    Text("December 2024")
+                        .font(.subheadline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("• Added multiple theme options (light, dark, colorful)")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Improved UI for better visual hierarchy")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Enhanced accessibility features")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Performance optimizations")
+                            .foregroundColor(theme.foregroundColor())
+                    }
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Version 1.2.0
+                Group {
+                    Text("Version 1.2.0")
+                        .font(.headline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    Text("October 2024")
+                        .font(.subheadline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("• Added reward/treasure system for consistent member care")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Implemented share functionality")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Streamlined interface for better usability")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Removed backup/restore in favor of cloud sync")
+                            .foregroundColor(theme.foregroundColor())
+                    }
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Version 1.1.0
+                Group {
+                    Text("Version 1.1.0")
+                        .font(.headline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    Text("July 2024")
+                        .font(.subheadline)
+                        .foregroundColor(theme.foregroundColor())
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("• Improved performance and stability")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Enhanced member management workflows")
+                            .foregroundColor(theme.foregroundColor())
+                        Text("• Bug fixes and optimizations")
+                            .foregroundColor(theme.foregroundColor())
+                    }
+                    
+                    Divider()
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Version 1.0.0
                 Group {
                     Text("Version 1.0.0")
                         .font(.headline)
                         .foregroundColor(theme.foregroundColor())
                     
-                    Text("Initial Release")
+                    Text("May 2024 - Initial Release")
                         .font(.subheadline)
                         .foregroundColor(theme.foregroundColor())
                     
