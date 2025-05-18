@@ -288,29 +288,33 @@ class MemberViewModel: ObservableObject {
     
     // Messaging Methods
     func getFilteredEmails(status: MemberStatus?, tag: String?) -> [String] {
-        let request = NSFetchRequest<Member>(entityName: "Member")
-        var predicates: [NSPredicate] = []
-
-        // Add status predicate if selected
+        // For tag filtering, we'll bypass Core Data's predicate system for transformable attributes
+        // and filter in memory instead, which is more reliable
+        
+        var request = NSFetchRequest<Member>(entityName: "Member")
+        
+        // Start with just the email requirement
+        request.predicate = NSPredicate(format: "email != nil AND email != ''")
+        
+        // Add status predicate if selected (this works reliably in Core Data)
         if let status = status {
-            predicates.append(NSPredicate(format: "status == %@", status.rawValue))
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                request.predicate!,
+                NSPredicate(format: "status == %@", status.rawValue)
+            ])
         }
-
-        // Add tag predicate if selected
+        
+        // Fetch all members with emails (and possibly filtered by status)
+        var members = (try? context.fetch(request)) ?? []
+        
+        // Then manually filter by tag if needed
         if let tag = tag {
-            predicates.append(NSPredicate(format: "ANY tags == %@", tag))
+            members = members.filter { member in
+                member.tagArray.contains(tag)
+            }
         }
-
-        // Require valid email
-        predicates.append(NSPredicate(format: "email != nil AND email != ''"))
-
-        // Combine predicates
-        if !predicates.isEmpty {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        }
-
-        // Fetch members and log for debugging
-        let members = (try? context.fetch(request)) ?? []
+        
+        // Log for debugging
         print("Email recipients for \(tag != nil ? "tag: \(tag!)" : "no tag"), \(status?.rawValue ?? "no status"):")
         for member in members {
             print("- \(member.firstName ?? "") \(member.lastName ?? ""): \(member.email ?? "no email")")
@@ -318,36 +322,43 @@ class MemberViewModel: ObservableObject {
         
         // Record treasure for email action
         TreasureManager.shared.recordEmailSent()
-
-        return members.compactMap { $0.email }
+        
+        // Return the emails
+        let emails = members.compactMap { $0.email }
+        print("Total email recipients: \(emails.count)")
+        print("Actual emails being sent: \(emails)")
+        
+        return emails
     }
     
     func getFilteredPhoneNumbers(status: MemberStatus?, tag: String?) -> [String] {
-        let request = NSFetchRequest<Member>(entityName: "Member")
-        var predicates: [NSPredicate] = []
-
-        // Add status predicate if selected
+        // For tag filtering, we'll bypass Core Data's predicate system for transformable attributes
+        // and filter in memory instead, which is more reliable
+        
+        var request = NSFetchRequest<Member>(entityName: "Member")
+        
+        // Start with just the phone requirement
+        request.predicate = NSPredicate(format: "phone != nil AND phone != ''")
+        
+        // Add status predicate if selected (this works reliably in Core Data)
         if let status = status {
-            predicates.append(NSPredicate(format: "status == %@", status.rawValue))
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                request.predicate!,
+                NSPredicate(format: "status == %@", status.rawValue)
+            ])
         }
-
-        // Add tag predicate if selected
+        
+        // Fetch all members with phone numbers (and possibly filtered by status)
+        var members = (try? context.fetch(request)) ?? []
+        
+        // Then manually filter by tag if needed
         if let tag = tag {
-            // Fix tag filtering by forcing a proper CONTAINS predicate on the serialized tags data
-            // This addresses issues with transformable NSArray not always being queried correctly
-            predicates.append(NSPredicate(format: "ANY tags == %@", tag))
+            members = members.filter { member in
+                member.tagArray.contains(tag)
+            }
         }
-
-        // Require valid phone number
-        predicates.append(NSPredicate(format: "phone != nil AND phone != ''"))
-
-        // Combine predicates
-        if !predicates.isEmpty {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        }
-
-        // Fetch members and log for debugging
-        let members = (try? context.fetch(request)) ?? []
+        
+        // Log for debugging
         print("SMS recipients for \(tag != nil ? "tag: \(tag!)" : "no tag"), \(status?.rawValue ?? "no status"):")
         for member in members {
             print("- \(member.firstName ?? "") \(member.lastName ?? ""): \(member.phone ?? "no phone")")
@@ -355,8 +366,13 @@ class MemberViewModel: ObservableObject {
         
         // Record treasure for SMS action
         TreasureManager.shared.recordMessageSent()
-
-        return members.compactMap { $0.phone }
+        
+        // Return the phone numbers
+        let phoneNumbers = members.compactMap { $0.phone }
+        print("Total SMS recipients: \(phoneNumbers.count)")
+        print("Actual phone numbers being sent: \(phoneNumbers)")
+        
+        return phoneNumbers
     }
     
     // Share App Methods
