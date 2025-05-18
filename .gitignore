@@ -1,0 +1,12 @@
+# Xcode User settings
+xcuserdata/
+
+# Swift Package Manager
+Package.resolved
+.build/
+
+# Mac
+.DS_Store
+
+# Exclude nested git repos
+dev_backups/
