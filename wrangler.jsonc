@@ -1,0 +1,11 @@
+{
+  "name": "sheepfold",
+  "compatibility_date": "2026-09-18",
+  "assets": {
+    "directory": "."
+  },
+  "routes": [
+    { "pattern": "sheepfold.app", "custom_domain": true },
+    { "pattern": "www.sheepfold.app", "custom_domain": true }
+  ]
+}
